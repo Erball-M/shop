@@ -10,10 +10,11 @@
     "build": "nest build",
     "deploy": "nest deploy",
     "start": "nest start",
-    "start:dev": "nest start --watch",
-    "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
-    "lint": "eslint \"src/**/*.ts\""
+    "dev": "nest start --watch",
+    "debug": "nest start --debug --watch",
+    "prod": "node dist/main",
+    "lint": "eslint \"src/**/*.ts\"",
+    "test": "node --test"
   },
   "dependencies": {
     "@nestjs/common": "^12.0.1",
