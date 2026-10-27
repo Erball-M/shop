@@ -3,7 +3,7 @@ import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
-import { AppModule } from "./app.module.js";
+import { AppModule } from "./core/app.module.js";
 
 const logger = new Logger("ApiGateway");
 
@@ -20,7 +20,6 @@ async function bootstrap() {
     credentials: true,
     origin: trustedOrigins,
   });
-  app.setGlobalPrefix("api");
   app.enableShutdownHooks();
 
   const swaggerConfig = new DocumentBuilder()
@@ -34,7 +33,7 @@ async function bootstrap() {
   await app.listen(port);
   const host = `http://localhost:${port}`;
   logger.log(`API gateway listening at ${host}`);
-  logger.log(`Swagger documentation available at ${host}/api/docs`);
+  logger.log(`Swagger documentation available at ${host}/docs`);
 }
 
 await bootstrap().catch((error: unknown) => {
