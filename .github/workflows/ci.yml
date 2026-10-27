@@ -45,8 +45,8 @@ jobs:
       - name: Run unit tests
         run: npm run test
 
-      - name: Type-check database package
-        run: npx tsc -p packages/database/tsconfig.json --noEmit
+      - name: Build database package
+        run: npm run build --workspace @repo/database
 
       - name: Build Next.js app
         run: npm run build --workspace client
