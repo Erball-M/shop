@@ -1,41 +1,46 @@
+import { Logger } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
-import { config } from "dotenv";
-import Joi from "joi";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 import { AppModule } from "./app.module.js";
 
-config({
-  path: resolve(dirname(fileURLToPath(import.meta.url)), "../../../.env"),
-});
+const logger = new Logger("ApiGateway");
 
 async function bootstrap() {
-  const { error, value } = Joi.object({
-    PORT: Joi.number().port().default(3001),
-    CORS_ORIGIN: Joi.string().default("*"),
-  })
-    .unknown(true)
-    .validate(process.env, { convert: true });
-
-  if (error) {
-    throw new Error(`Invalid environment configuration: ${error.message}`);
-  }
-
-  Object.assign(process.env, value);
-  const app = await NestFactory.create(AppModule);
-  const port = Number(process.env.PORT);
-  const corsOrigin = process.env.CORS_ORIGIN ?? "*";
+  const app = await NestFactory.create(AppModule, { logger });
+  const configService = app.get(ConfigService);
+  const port = configService.getOrThrow<number>("API_GATEWAY_PORT");
+  const corsOrigin = configService.getOrThrow<string>(
+    "API_GATEWAY_CORS_ORIGIN",
+  );
+  const trustedOrigins = corsOrigin.split(",").map((origin) => origin.trim());
 
   app.enableCors({
-    origin:
-      corsOrigin === "*"
-        ? true
-        : corsOrigin.split(",").map((origin) => origin.trim()),
+    credentials: true,
+    origin: trustedOrigins,
   });
   app.setGlobalPrefix("api");
   app.enableShutdownHooks();
 
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle("Shop API Gateway")
+    .setDescription("API gateway for the Shop microservices")
+    .setVersion("1.0")
+    .build();
+  const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup("docs", app, swaggerDocument);
+
   await app.listen(port);
+  const host = `http://localhost:${port}`;
+  logger.log(`API gateway listening at ${host}`);
+  logger.log(`Swagger documentation available at ${host}/api/docs`);
 }
-await bootstrap();
+
+await bootstrap().catch((error: unknown) => {
+  logger.error(
+    "API gateway failed to start",
+    error instanceof Error ? error.stack : String(error),
+  );
+  process.exitCode = 1;
+});
