@@ -45,6 +45,9 @@ jobs:
       - name: Run unit tests
         run: npm run test
 
+      - name: Build contracts package
+        run: npm run build --workspace @repo/contracts
+
       - name: Build database package
         run: npm run build --workspace @repo/database
 
