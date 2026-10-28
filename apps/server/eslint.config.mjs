@@ -5,6 +5,13 @@ export default tseslint.config(
   {
     ignores: ["dist/**", "coverage/**"],
   },
+  {
+    languageOptions: {
+      parserOptions: {
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
 );
