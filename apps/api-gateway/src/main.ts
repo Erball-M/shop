@@ -13,6 +13,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { logger });
   const configService = app.get(ConfigService);
   const port = configService.getOrThrow<number>("API_GATEWAY_PORT");
+  const nodeEnv = configService.getOrThrow<string>("NODE_ENV");
   const corsOrigin = configService.getOrThrow<string>(
     "API_GATEWAY_CORS_ORIGIN",
   );
@@ -21,12 +22,16 @@ async function bootstrap() {
   configureCors(app, corsOrigin);
   app.enableShutdownHooks();
 
-  configureSwagger(app);
+  if (nodeEnv !== "production") {
+    configureSwagger(app);
+  }
 
   await app.listen(port);
-  const host = `http://localhost:${port}`;
+  const host = await app.getUrl();
   logger.log(`API gateway listening at ${host}`);
-  logger.log(`Swagger documentation available at ${host}/docs`);
+  if (nodeEnv !== "production") {
+    logger.log(`Swagger documentation available at ${host}/docs`);
+  }
 }
 
 await bootstrap().catch((error: unknown) => {
