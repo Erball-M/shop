@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package auth.v1;
+
+// AuthService handles one-time-password authentication.
+service AuthService {
+  // Sends a one-time password to the requested identifier.
+  rpc SendOtp(SendOtpRequest) returns (SendOtpResponse);
+
+  // Verifies a previously sent one-time password.
+  rpc VerifyOtp(VerifyOtpRequest) returns (VerifyOtpResponse);
+}
+
+// Identifies the destination for a one-time password.
+enum OtpIdentifierType {
+  OTP_IDENTIFIER_TYPE_UNSPECIFIED = 0;
+  OTP_IDENTIFIER_TYPE_EMAIL = 1;
+  OTP_IDENTIFIER_TYPE_PHONE = 2;
+}
+
+// Requests a one-time password.
+message SendOtpRequest {
+  string identifier = 1;
+  OtpIdentifierType type = 2;
+}
+
+// Reports whether the one-time password was sent.
+message SendOtpResponse {
+  bool ok = 1;
+}
+
+// Requests verification of a one-time password.
+message VerifyOtpRequest {
+  string identifier = 1;
+  OtpIdentifierType type = 2;
+  string code = 3;
+}
+
+// Reports whether the one-time password was valid.
+message VerifyOtpResponse {
+  bool ok = 1;
+}
