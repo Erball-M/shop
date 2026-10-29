@@ -22,10 +22,6 @@ if (!fs.existsSync(protoDirectory)) {
   throw new Error(`Proto directory not found at ${protoDirectory}`);
 }
 
-if (!fs.existsSync(plugin)) {
-  throw new Error(`ts-proto plugin not found at ${plugin}`);
-}
-
 const protoFiles = fs
   .readdirSync(protoDirectory, { recursive: true })
   .filter((file) => file.endsWith(".proto"))
@@ -33,7 +29,14 @@ const protoFiles = fs
   .sort();
 
 if (protoFiles.length === 0) {
-  throw new Error(`No .proto files found in ${protoDirectory}`);
+  console.log(
+    `No .proto files found in ${protoDirectory}; skipping generation.`,
+  );
+  process.exit(0);
+}
+
+if (!fs.existsSync(plugin)) {
+  throw new Error(`ts-proto plugin not found at ${plugin}`);
 }
 
 fs.rmSync(generatedDirectory, { recursive: true, force: true });
