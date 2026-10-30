@@ -43,6 +43,7 @@ export function validateConfiguration(
           : origins;
       }),
     API_GATEWAY_PORT: Joi.number().port().default(3001),
+    AUTH_GRPC_URL: Joi.string().default("localhost:50051"),
   })
     .unknown(true)
     .validate(config, { convert: true });

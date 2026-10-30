@@ -2,8 +2,8 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class AuthActionResponse {
   @ApiProperty({
-    description: "Indicates that the stub accepted the request.",
+    description: "Indicates whether the auth operation succeeded.",
     example: true,
   })
-  ok!: true;
+  ok!: boolean;
 }

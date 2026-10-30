@@ -17,11 +17,15 @@
     "test": "npm run build && node --test test/*.test.js"
   },
   "dependencies": {
+    "@grpc/grpc-js": "^1.14.0",
+    "@grpc/proto-loader": "^0.8.0",
     "@nestjs/common": "^12.0.1",
     "@nestjs/config": "^12.0.1",
     "@nestjs/core": "^12.0.1",
+    "@nestjs/microservices": "^12.0.1",
     "@nestjs/platform-express": "^12.0.1",
     "@nestjs/swagger": "^12.0.5",
+    "@repo/contracts": "*",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
     "joi": "^18.0.1",
