@@ -1,6 +1,9 @@
 import { NestFactory } from "@nestjs/core";
-import { type MicroserviceOptions, Transport } from "@nestjs/microservices";
-import { AUTH_V1_PACKAGE_NAME, protobufFileName } from "@repo/contracts";
+import {
+  AUTH_V1_PACKAGE_NAME,
+  createGrpcOptions,
+  protobufFileName,
+} from "@repo/contracts";
 import { config } from "dotenv";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -12,27 +15,17 @@ config({
 });
 
 async function bootstrap() {
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(
+  const app = await NestFactory.createMicroservice(
     AppModule,
-    {
-      transport: Transport.GRPC,
-      options: {
-        package: AUTH_V1_PACKAGE_NAME,
-        protoPath: resolve(
-          dirname(fileURLToPath(import.meta.url)),
-          "../../../packages/contracts/proto",
-          protobufFileName,
-        ),
-        url: process.env.AUTH_GRPC_URL ?? "0.0.0.0:50051",
-        loader: {
-          keepCase: false,
-          longs: String,
-          enums: Number,
-          defaults: true,
-          oneofs: true,
-        },
-      },
-    },
+    createGrpcOptions({
+      packageName: AUTH_V1_PACKAGE_NAME,
+      protoPath: resolve(
+        dirname(fileURLToPath(import.meta.url)),
+        "../../../packages/contracts/proto",
+        protobufFileName,
+      ),
+      url: process.env.AUTH_GRPC_URL ?? "0.0.0.0:50051",
+    }),
   );
 
   await app.listen();
