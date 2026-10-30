@@ -14,7 +14,6 @@ jobs:
     name: Quality checks
     runs-on: ubuntu-latest
     env:
-      DATABASE_URL: postgresql://ci:ci@localhost:5432/ci?schema=public
 
     steps:
       - name: Check out repository
@@ -39,9 +38,6 @@ jobs:
       - name: Check formatting
         run: npm run format:check
 
-      - name: Generate Prisma client
-        run: npm run generate --workspace @repo/database
-
       - name: Lint
         run: npm run lint
 
@@ -50,9 +46,6 @@ jobs:
 
       - name: Build contracts package
         run: npm run build --workspace @repo/contracts
-
-      - name: Build database package
-        run: npm run build --workspace @repo/database
 
       - name: Build Next.js app
         run: npm run build --workspace client
