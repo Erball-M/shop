@@ -9,7 +9,7 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "check:quick": "npm run format:check && npm run lint && npm run test",
-    "check": "npm run check:quick && npm run build --workspace @repo/contracts && npm run build --workspace @repo/database && npm run build --workspace client && npx tsc -p apps/server/tsconfig.build.json --noEmit"
+    "check": "npm run check:quick && npm run build --workspace @repo/contracts && npm run build --workspace @repo/database && npm run build --workspace client && npx tsc -p apps/api-gateway/tsconfig.build.json --noEmit"
   },
   "private": true,
   "workspaces": [
