@@ -17,7 +17,7 @@
     "debug": "nest start --debug --watch",
     "prod": "node dist/src/main.js",
     "lint": "eslint \"src/**/*.ts\"",
-    "test": "node --test"
+    "test": "npm run build && node --test test/*.test.js"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.14.0",
