@@ -20,6 +20,7 @@ export function validateConfiguration(
     NODE_ENV: Joi.string()
       .valid("development", "test", "production")
       .default("development"),
+    AUTH_DATABASE_URL: Joi.string().required(),
     AUTH_GRPC_URL: Joi.string().default("0.0.0.0:50051"),
   })
     .unknown(true)
