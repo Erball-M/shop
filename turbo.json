@@ -1,17 +1,38 @@
 {
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
+  "globalEnv": ["NODE_ENV"],
   "tasks": {
     "generate": {
+      "inputs": ["$TURBO_DEFAULT$", ".env", ".env.local"],
       "outputs": ["generated/**"]
     },
     "build": {
       "dependsOn": ["^build", "generate"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
-      "env": []
+      "env": ["NEXT_PUBLIC_*", "API_GATEWAY_CORS_ORIGIN", "API_GATEWAY_PORT"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env",
+        ".env.local",
+        ".env.development",
+        ".env.development.local",
+        ".env.production",
+        ".env.production.local"
+      ]
     },
     "dev": {
       "cache": false,
+      "env": ["NEXT_PUBLIC_*", "API_GATEWAY_CORS_ORIGIN", "API_GATEWAY_PORT"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env",
+        ".env.local",
+        ".env.development",
+        ".env.development.local",
+        ".env.production",
+        ".env.production.local"
+      ],
       "persistent": true
     },
     "lint": {},

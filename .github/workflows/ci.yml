@@ -43,11 +43,5 @@ jobs:
       - name: Run unit tests
         run: npm run test
 
-      - name: Build contracts package
-        run: npm run build --workspace @repo/contracts
-
-      - name: Build Next.js app
-        run: npm run build --workspace client
-
-      - name: Type-check NestJS app
-        run: npx tsc -p apps/api-gateway/tsconfig.build.json --noEmit
+      - name: Build workspace
+        run: npm run build
