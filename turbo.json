@@ -10,11 +10,7 @@
     "build": {
       "dependsOn": ["^build", "generate"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
-      "env": [
-        "NEXT_PUBLIC_*",
-        "API_GATEWAY_CORS_ORIGIN",
-        "API_GATEWAY_PORT"
-      ],
+      "env": ["NEXT_PUBLIC_*", "API_GATEWAY_CORS_ORIGIN", "API_GATEWAY_PORT"],
       "inputs": [
         "$TURBO_DEFAULT$",
         ".env",
@@ -27,11 +23,7 @@
     },
     "dev": {
       "cache": false,
-      "env": [
-        "NEXT_PUBLIC_*",
-        "API_GATEWAY_CORS_ORIGIN",
-        "API_GATEWAY_PORT"
-      ],
+      "env": ["NEXT_PUBLIC_*", "API_GATEWAY_CORS_ORIGIN", "API_GATEWAY_PORT"],
       "inputs": [
         "$TURBO_DEFAULT$",
         ".env",
