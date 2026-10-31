@@ -9,12 +9,15 @@
   "scripts": {
     "build": "nest build",
     "deploy": "nest deploy",
+    "generate": "prisma generate --config prisma7.config.ts",
+    "migrate:dev": "prisma migrate dev --config prisma7.config.ts",
+    "studio": "prisma studio --config prisma7.config.ts",
     "start": "nest start",
     "dev": "nest start --watch",
     "debug": "nest start --debug --watch",
-    "prod": "node dist/main",
+    "prod": "node dist/src/main.js",
     "lint": "eslint \"src/**/*.ts\"",
-    "test": "node --test"
+    "test": "npm run build && node --test test/*.test.js"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.14.0",
@@ -23,9 +26,13 @@
     "@nestjs/config": "^12.0.1",
     "@nestjs/core": "^12.0.1",
     "@nestjs/microservices": "^12.0.1",
+    "@prisma/adapter-pg": "^7.10.1",
+    "@prisma/client": "^7.10.1",
     "@repo/contracts": "*",
+    "@repo/prisma-config": "*",
     "dotenv": "^17.2.3",
     "joi": "^18.0.1",
+    "pg": "^8.23.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
@@ -35,6 +42,7 @@
     "@nestjs/schematics": "^12.0.0",
     "@types/node": "^24.0.0",
     "eslint": "^10.13.0",
+    "prisma": "^7.10.1",
     "typescript": "^6.0.2",
     "typescript-eslint": "^8.72.1"
   }

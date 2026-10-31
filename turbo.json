@@ -3,12 +3,12 @@
   "ui": "tui",
   "tasks": {
     "generate": {
-      "outputs": ["generated/**"]
+      "outputs": ["**/generated/**"]
     },
     "build": {
       "dependsOn": ["^build", "generate"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
-      "env": []
+      "env": ["AUTH_DATABASE_URL"]
     },
     "dev": {
       "cache": false,
