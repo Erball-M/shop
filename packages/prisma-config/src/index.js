@@ -7,7 +7,7 @@ export function createPrismaConfig({
   databaseUrlEnvironmentVariable,
 }) {
   config({
-    path: resolve(dirname(fileURLToPath(configFileUrl)), "../../.env"),
+    path: resolve(dirname(fileURLToPath(configFileUrl)), ".env"),
   });
 
   return {

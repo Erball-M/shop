@@ -1,14 +1,10 @@
 import type { ConfigModuleOptions } from "@nestjs/config";
 import Joi from "joi";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
 
 export const configModuleOptions: ConfigModuleOptions = {
   cache: true,
-  envFilePath: resolve(
-    dirname(fileURLToPath(import.meta.url)),
-    "../../../../.env",
-  ),
+  envFilePath: resolve(process.cwd(), ".env"),
   isGlobal: true,
   validate: validateConfiguration,
 };
