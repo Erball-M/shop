@@ -13,7 +13,6 @@ jobs:
   quality:
     name: Quality checks
     runs-on: ubuntu-latest
-    env:
 
     steps:
       - name: Check out repository
