@@ -4,6 +4,7 @@
   "globalEnv": ["NODE_ENV"],
   "tasks": {
     "generate": {
+      "env": ["AUTH_DATABASE_URL"],
       "inputs": ["$TURBO_DEFAULT$", ".env", ".env.local"],
       "outputs": ["**/generated/**"]
     },
@@ -11,10 +12,11 @@
       "dependsOn": ["^build", "generate"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
       "env": [
-        "AUTH_DATABASE_URL",
-        "NEXT_PUBLIC_*",
         "API_GATEWAY_CORS_ORIGIN",
-        "API_GATEWAY_PORT"
+        "API_GATEWAY_PORT",
+        "AUTH_DATABASE_URL",
+        "AUTH_GRPC_URL",
+        "NEXT_PUBLIC_*"
       ],
       "inputs": [
         "$TURBO_DEFAULT$",
@@ -28,7 +30,13 @@
     },
     "dev": {
       "cache": false,
-      "env": ["NEXT_PUBLIC_*", "API_GATEWAY_CORS_ORIGIN", "API_GATEWAY_PORT"],
+      "env": [
+        "API_GATEWAY_CORS_ORIGIN",
+        "API_GATEWAY_PORT",
+        "AUTH_DATABASE_URL",
+        "AUTH_GRPC_URL",
+        "NEXT_PUBLIC_*"
+      ],
       "inputs": [
         "$TURBO_DEFAULT$",
         ".env",

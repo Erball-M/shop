@@ -4,7 +4,10 @@ import { resolve } from "node:path";
 
 export const configModuleOptions: ConfigModuleOptions = {
   cache: true,
-  envFilePath: resolve(process.cwd(), ".env"),
+  envFilePath: [
+    resolve(process.cwd(), ".env"),
+    resolve(process.cwd(), "../../.env"),
+  ],
   isGlobal: true,
   validate: validateConfiguration,
 };
