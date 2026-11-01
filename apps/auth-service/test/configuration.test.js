@@ -9,11 +9,13 @@ const authDatabaseUrl =
 test("accepts the auth database configuration", () => {
   const config = validateConfiguration({
     AUTH_DATABASE_URL: authDatabaseUrl,
+    REDIS_URL: "redis://localhost:6379",
   });
 
   assert.equal(config.AUTH_DATABASE_URL, authDatabaseUrl);
   assert.equal(config.NODE_ENV, "development");
   assert.equal(config.AUTH_GRPC_URL, "0.0.0.0:50051");
+  assert.equal(config.REDIS_URL, "redis://localhost:6379");
 });
 
 test("rejects a missing auth database URL", () => {
